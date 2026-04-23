@@ -1,0 +1,306 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { glossaryEntries, categoryConfig, type GlossaryCategory } from '../data/glossary';
+
+const categories = Object.entries(categoryConfig) as [GlossaryCategory, typeof categoryConfig[GlossaryCategory]][];
+const sorted = [...glossaryEntries].sort((a, b) => a.term.localeCompare(b.term, 'es'));
+
+// Build alphabetical groups
+const grouped: Record<string, typeof sorted> = {};
+for (const entry of sorted) {
+  const letter = entry.term[0].toUpperCase().replace(/[^A-Z]/g, '#');
+  if (!grouped[letter]) grouped[letter] = [];
+  grouped[letter].push(entry);
+}
+const letters = Object.keys(grouped).sort();
+---
+
+<Layout title="Glosario" description="Glosario completo de términos de Micología Clínica con búsqueda y filtros">
+  <div class="page-intro animate-in">
+    <h1>📖 Glosario de Micología Clínica</h1>
+    <p class="page-intro__text">
+      {glossaryEntries.length} términos técnicos organizados alfabéticamente. Usa el buscador o filtra por categoría.
+    </p>
+  </div>
+
+  <!-- CONTROLES -->
+  <div class="controls animate-in delay-1">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input
+        type="search"
+        id="gloss-search"
+        class="search-input"
+        placeholder="Buscar término..."
+        autocomplete="off"
+      />
+    </div>
+    <div class="filter-wrap">
+      <button class="filter-btn active" data-cat="all">Todos</button>
+      {categories.map(([cat, cfg]) => (
+        <button class="filter-btn" data-cat={cat} style={`--cat-color:${cfg.color}`}>
+          {cfg.icon} {cfg.label}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- ALPHA INDEX -->
+  <div class="alpha-index animate-in delay-2">
+    {letters.map(l => (
+      <a href={`#letra-${l}`} class="alpha-link">{l}</a>
+    ))}
+  </div>
+
+  <!-- ENTRIES -->
+  <div id="glossary-container" class="glossary-container animate-in delay-3">
+    <p id="no-results" class="no-results" style="display:none">No se encontraron resultados. Prueba con otro término.</p>
+
+    {letters.map(letter => (
+      <section class="alpha-section" data-letter={letter}>
+        <h2 class="alpha-heading" id={`letra-${letter}`}>{letter}</h2>
+        <div class="entries-list">
+          {grouped[letter].map(entry => (
+            <div
+              class="gloss-entry"
+              data-category={entry.category}
+              data-search={`${entry.term} ${entry.definition} ${entry.category}`.toLowerCase()}
+            >
+              <div class="gloss-entry__header">
+                <span class="gloss-entry__term">{entry.term}</span>
+                <span
+                  class="gloss-entry__cat"
+                  style={`background: ${categoryConfig[entry.category].color}22; color: ${categoryConfig[entry.category].color}`}
+                >
+                  {categoryConfig[entry.category].icon} {categoryConfig[entry.category].label}
+                </span>
+              </div>
+              <p class="gloss-entry__def">{entry.definition}</p>
+              {entry.mnemonic && (
+                <div class="gloss-entry__mnemonic">
+                  <span class="mnemonic-label">💡 Truco:</span> {entry.mnemonic}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</Layout>
+
+<script>
+  const searchInput = document.getElementById('gloss-search') as HTMLInputElement;
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const noResults = document.getElementById('no-results')!;
+  let currentCat = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    const entries = document.querySelectorAll<HTMLElement>('.gloss-entry');
+    const sections = document.querySelectorAll<HTMLElement>('.alpha-section');
+    let visibleCount = 0;
+
+    entries.forEach(entry => {
+      const catMatch = currentCat === 'all' || entry.dataset.category === currentCat;
+      const search = entry.dataset.search ?? '';
+      const searchMatch = searchQuery === '' || search.includes(searchQuery);
+      const visible = catMatch && searchMatch;
+      entry.style.display = visible ? '' : 'none';
+      if (visible) visibleCount++;
+    });
+
+    sections.forEach(section => {
+      const hasVisible = section.querySelectorAll('.gloss-entry:not([style*="none"])').length > 0;
+      section.style.display = hasVisible ? '' : 'none';
+    });
+
+    if (searchQuery) highlightTerms(searchQuery);
+    else clearHighlights();
+
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+
+  function highlightTerms(query: string) {
+    document.querySelectorAll('.gloss-entry__def, .gloss-entry__term').forEach(el => {
+      const original = el.getAttribute('data-original') ?? el.textContent ?? '';
+      el.setAttribute('data-original', original);
+      const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      el.innerHTML = original.replace(regex, '<mark>$1</mark>');
+    });
+  }
+
+  function clearHighlights() {
+    document.querySelectorAll('.gloss-entry__def, .gloss-entry__term').forEach(el => {
+      const original = el.getAttribute('data-original');
+      if (original) el.textContent = original;
+    });
+  }
+
+  searchInput?.addEventListener('input', () => {
+    searchQuery = searchInput.value.trim().toLowerCase();
+    applyFilters();
+  });
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCat = btn.dataset.cat ?? 'all';
+      applyFilters();
+    });
+  });
+</script>
+
+<style>
+  .page-intro { margin-bottom: 2rem; }
+  .page-intro__text { color: var(--text-muted); font-size: 1.05rem; }
+
+  .controls { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+
+  .search-wrap {
+    position: relative;
+    max-width: 460px;
+  }
+  .search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    pointer-events: none;
+  }
+  .search-input {
+    width: 100%;
+    padding: 0.65rem 1rem 0.65rem 2.5rem;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    background: var(--bg-card);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-input:focus { border-color: var(--primary); }
+
+  .filter-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .filter-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--cat-color, var(--primary)); color: var(--cat-color, var(--primary)); }
+  .filter-btn.active {
+    background: var(--cat-color, var(--primary));
+    border-color: var(--cat-color, var(--primary));
+    color: #fff;
+  }
+
+  .alpha-index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  .alpha-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--primary-dark);
+    transition: background 0.15s, color 0.15s;
+  }
+  .alpha-link:hover { background: var(--primary); color: #fff; }
+
+  .alpha-section { margin-bottom: 2rem; }
+  .alpha-heading {
+    font-size: 1.5rem;
+    color: var(--primary-dark);
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 0.35rem;
+    margin: 0 0 1rem;
+    scroll-margin-top: 80px;
+  }
+
+  .entries-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .gloss-entry {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.15rem;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.15s;
+  }
+  .gloss-entry:hover { box-shadow: var(--shadow-lg); }
+
+  .gloss-entry__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .gloss-entry__term {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .gloss-entry__cat {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.2rem 0.65rem;
+    border-radius: 99px;
+    white-space: nowrap;
+  }
+  .gloss-entry__def {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+  .gloss-entry__mnemonic {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    background: #fff8e1;
+    border-left: 3px solid var(--secondary);
+    padding: 0.4rem 0.75rem;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: #5a3f00;
+  }
+  .mnemonic-label { font-weight: 700; }
+
+  .no-results {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 1rem;
+    padding: 3rem 1rem;
+  }
+
+  :global(mark) {
+    background: #ffeb3b;
+    color: #000;
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+</style>

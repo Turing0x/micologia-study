@@ -1,0 +1,56 @@
+---
+interface Props {
+  type?: 'important' | 'tip' | 'warning' | 'exam';
+  title?: string;
+}
+const { type = 'important', title } = Astro.props;
+
+const defaults: Record<string, { icon: string; label: string }> = {
+  important: { icon: '⚠️', label: 'Importante' },
+  tip: { icon: '💡', label: 'Consejo' },
+  warning: { icon: '🚨', label: 'Atención' },
+  exam: { icon: '📝', label: 'Clave de examen' },
+};
+const { icon, label } = defaults[type] ?? defaults.important;
+const displayTitle = title ?? label;
+---
+
+<div class={`info-box info-box--${type}`}>
+  <div class="info-box__header">
+    <span class="info-box__icon">{icon}</span>
+    <strong class="info-box__title">{displayTitle}</strong>
+  </div>
+  <div class="info-box__body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .info-box {
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1.1rem;
+    margin: 1rem 0 1.5rem;
+    border-left: 4px solid;
+  }
+  .info-box--important { background: #fff8e1; border-color: var(--secondary); }
+  .info-box--tip       { background: #e8f5e9; border-color: var(--primary); }
+  .info-box--warning   { background: #fdecea; border-color: var(--danger); }
+  .info-box--exam      { background: #f3e5ff; border-color: var(--accent); }
+
+  .info-box__header {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+  .info-box__icon { font-size: 1.1rem; }
+  .info-box__title { font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .info-box--important .info-box__title { color: #7a5c00; }
+  .info-box--tip       .info-box__title { color: var(--primary-dark); }
+  .info-box--warning   .info-box__title { color: var(--danger); }
+  .info-box--exam      .info-box__title { color: var(--accent); }
+
+  .info-box__body { font-size: 0.92rem; color: var(--text); }
+  .info-box__body :global(p:last-child) { margin-bottom: 0; }
+  .info-box__body :global(ul:last-child), .info-box__body :global(ol:last-child) { margin-bottom: 0; }
+</style>

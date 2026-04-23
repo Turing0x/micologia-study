@@ -1,0 +1,272 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import InfoBox from '../components/InfoBox.astro';
+import FlashCard from '../components/FlashCard.astro';
+---
+
+<Layout title="Candidiasis" description="Género Candida, formas clínicas, diagnóstico y resistencias antifúngicas">
+  <div class="page-intro animate-in">
+    <h1>🦠 Candidiasis</h1>
+    <p class="page-intro__text">Género <em>Candida</em>, formas clínicas, resistencias antifúngicas y diagnóstico de laboratorio.</p>
+  </div>
+
+  <!-- GÉNERO CANDIDA -->
+  <SectionHeader title="1. El Género Candida" icon="🔬" color="secondary" />
+
+  <ul>
+    <li>Eucariotas, unicelulares, redondas u ovales.</li>
+    <li>Reproducción por <strong>gemación</strong> (blastoconidios).</li>
+    <li>Algunas forman <strong>pseudohifas</strong> e <strong>hifas verdaderas</strong>.</li>
+    <li>Colonias cremosas, hialinas o levemente pigmentadas.</li>
+    <li>Aproximadamente <strong>200 especies</strong>, de las que ~20 son clínicamente relevantes.</li>
+  </ul>
+
+  <h3>Especies principales</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Especie</th><th>Características clave</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><em>C. albicans</em></strong></td>
+          <td>La más frecuente. Forma <strong>tubo germinativo</strong> (prueba diagnóstica clave). Flora normal en mucosas.</td>
+        </tr>
+        <tr>
+          <td><em>C. tropicalis</em></td>
+          <td>Virulencia elevada.</td>
+        </tr>
+        <tr>
+          <td><em>C. glabrata</em></td>
+          <td><span class="danger-text">Resistencia reducida a azoles.</span> Mayor aislamiento en vagina.</td>
+        </tr>
+        <tr>
+          <td><em>C. parapsilosis</em></td>
+          <td>Asociada a catéteres y neonatos. Aislamiento frecuente en piel.</td>
+        </tr>
+        <tr>
+          <td><em>C. krusei</em></td>
+          <td><span class="danger-text">Resistencia intrínseca a fluconazol.</span></td>
+        </tr>
+        <tr>
+          <td><em>C. guilliermondii</em></td>
+          <td><span class="danger-text">Resistencia reducida a azoles.</span></td>
+        </tr>
+        <tr>
+          <td><em>C. dubliniensis</em></td>
+          <td>Similar a <em>C. albicans</em>. Aislamiento frecuente en cavidad oral.</td>
+        </tr>
+        <tr>
+          <td><em>C. lusitaniae</em></td>
+          <td><span class="danger-text">Resistencia a anfotericina B.</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <InfoBox type="exam" title="Las 3 especies con resistencia a azoles">
+    <p><strong>C. krusei</strong> (intrínseca), <strong>C. guilliermondii</strong> (reducida) y <strong>C. glabrata</strong> (reducida/R). ¡Identifica siempre a nivel de especie!</p>
+    <p><strong>C. lusitaniae</strong> es resistente a anfotericina B (no a azoles).</p>
+  </InfoBox>
+
+  <!-- EPIDEMIOLOGÍA -->
+  <SectionHeader title="2. Epidemiología" icon="📊" color="secondary" />
+
+  <ul>
+    <li><em>Candida</em> es <strong>flora normal</strong> del ser humano (mucosas GI, respiratoria, genitourinaria).</li>
+    <li>Son <strong>patógenos oportunistas</strong> que causan infección endógena.</li>
+    <li><em>C. albicans</em> se aísla en: cavidad oral del <strong>60%</strong> de personas sanas, vagina del <strong>70%</strong>, piel del <strong>20%</strong>.</li>
+  </ul>
+
+  <!-- FORMAS CLÍNICAS -->
+  <SectionHeader title="3. Formas Clínicas" icon="🏥" color="secondary" />
+
+  <h3>A) Infecciones de Mucosas</h3>
+
+  <div class="clinical-grid">
+    <div class="clinical-card">
+      <h4>Candidiasis Orofaríngea (Muguet)</h4>
+      <p>Placas blanquecinas en lengua y mucosa oral que <strong>se desprenden al rasparlas</strong>. Más frecuente en neonatos, inmunodeprimidos y usuarios de antibióticos.</p>
+    </div>
+    <div class="clinical-card">
+      <h4>Esofagitis Candidiásica</h4>
+      <p>Asociada a pacientes hematológicos o con SIDA. Síntomas: <strong>odinofagia</strong>, sensación de obstrucción, dolor torácico. Diagnóstico: endoscopia + biopsia.</p>
+    </div>
+    <div class="clinical-card">
+      <h4>Vaginitis</h4>
+      <p>Principal causa de infecciones vaginales. Síntomas: prurito + secreción blanquecina + eritema. Factores de riesgo: diabetes, antibióticos, embarazo, corticoides.</p>
+    </div>
+    <div class="clinical-card">
+      <h4>Balanitis</h4>
+      <p>En pareja de mujer con vaginitis, en diabéticos o inmunosuprimidos. Eritema, micropústulas, erosiones superficiales.</p>
+    </div>
+  </div>
+
+  <h3>B) Síndromes Cutáneos</h3>
+  <ul>
+    <li><strong>Intertrigo candidiásico:</strong> pliegues cutáneos húmedos.</li>
+    <li><strong>Paroniquia y Onicomicosis:</strong> infección de uñas y pliegues periungueales.</li>
+    <li><strong>Candidiasis mucocutánea crónica:</strong> déficit inmune T, persistente y recurrente.</li>
+  </ul>
+
+  <h3>C) Candidiasis Invasoras</h3>
+
+  <InfoBox type="warning" title="Candidemia">
+    <ul>
+      <li>Presencia de <em>Candida</em> en torrente sanguíneo.</li>
+      <li>Incidencia en aumento: <strong>5–10% de las sepsis nosocomiales</strong>.</li>
+      <li>Mortalidad muy elevada: <strong>~40%</strong>.</li>
+      <li>Distribución: <em>C. albicans</em> 50–60%, <em>C. parapsilosis</em> 10–20%, <em>C. glabrata</em> 10–20%.</li>
+    </ul>
+  </InfoBox>
+
+  <h4>Factores de riesgo de candidemia</h4>
+  <div class="risk-tags">
+    <span class="risk-tag">★ Catéter venoso central</span>
+    <span class="risk-tag">Antibióticos de amplio espectro</span>
+    <span class="risk-tag">Nutrición parenteral</span>
+    <span class="risk-tag">Cirugía GI o torácica</span>
+    <span class="risk-tag">Neutropenia</span>
+    <span class="risk-tag">Quemados</span>
+    <span class="risk-tag">Trasplantados</span>
+    <span class="risk-tag">Neonatos de bajo peso</span>
+    <span class="risk-tag">Adictos a drogas IV</span>
+  </div>
+
+  <!-- DIAGNÓSTICO -->
+  <SectionHeader title="4. Diagnóstico Microbiológico" icon="🧫" color="secondary" />
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Tipo infección</th><th>Muestra</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Superficial</td><td>Escobillón (×2) en medio de transporte</td></tr>
+        <tr><td>Candidiasis profunda — sangre</td><td>2 hemocultivos de 10–20 ml (1,5 ml niños). Baja sensibilidad ~50%</td></tr>
+        <tr><td>Candidiasis pulmonar</td><td>BAL (VPP >80% en inmunosuprimidos)</td></tr>
+        <tr><td>Otras</td><td>Esputo inducido, aspirado, LCR, biopsia</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <InfoBox type="important" title="Prueba del Tubo Germinativo — Identificación de C. albicans">
+    <p>Incubar en suero humano a 37°C durante <strong>2–3 horas</strong>. Si se forma un tubo filamentoso sin estrangulamiento → <strong>positivo</strong> → <em>C. albicans</em> (o <em>C. dubliniensis</em>).</p>
+  </InfoBox>
+
+  <h3>Otros métodos diagnósticos</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Marcador</th><th>Especificidad</th><th>Positivo en</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>β-D-Glucano</strong></td><td>Inespecífico</td><td>Candida, Aspergillus, Pneumocystis</td></tr>
+        <tr><td><strong>Galactomanano</strong></td><td>Específico de Aspergillus</td><td>Solo Aspergillus — NO útil para Candida</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RESISTENCIAS -->
+  <SectionHeader title="5. Resistencias a Antifúngicos" icon="💊" color="danger" />
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Especie</th><th>Fluconazol</th><th>Otras notas</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><em>C. albicans</em></td><td>✅ Sensible</td><td>—</td></tr>
+        <tr><td><em>C. tropicalis</em></td><td>✅ Sensible</td><td>—</td></tr>
+        <tr><td><em>C. glabrata</em></td><td>⚠️ Resistencia reducida / R</td><td>—</td></tr>
+        <tr><td><em>C. krusei</em></td><td>❌ Resistente (intrínseco)</td><td>—</td></tr>
+        <tr><td><em>C. guilliermondii</em></td><td>⚠️ Resistencia reducida</td><td>—</td></tr>
+        <tr><td><em>C. lusitaniae</em></td><td>✅ Sensible</td><td>❌ Resistente a Anfotericina B</td></tr>
+        <tr><td><em>C. parapsilosis</em></td><td>✅ Sensible</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FLASHCARDS -->
+  <SectionHeader title="Fichas de Repaso" icon="🃏" color="secondary" subtitle="Toca cada tarjeta para ver la respuesta" />
+
+  <div class="flashcards-grid">
+    <FlashCard
+      front="¿Qué prueba distingue C. albicans del resto de Candida en solo 2–3 horas?"
+      back="Prueba del TUBO GERMINATIVO: incubar en suero a 37°C. Solo albicans (y dubliniensis) lo forman."
+      category="Candidiasis"
+    />
+    <FlashCard
+      front="Las 3 especies de Candida con resistencia a azoles ('las problemáticas')"
+      back="C. krusei (intrínseca), C. glabrata (reducida), C. guilliermondii (reducida)"
+      category="Resistencias"
+    />
+    <FlashCard
+      front="¿Cuál es la mortalidad de la candidemia y qué % representa de las sepsis nosocomiales?"
+      back="Mortalidad ~40%. Representa el 5–10% de las sepsis nosocomiales."
+      category="Candidemia"
+    />
+    <FlashCard
+      front="Sensibilidad de los hemocultivos para detectar candidemia"
+      back="~50% — muy baja. Por eso se toman 2 hemocultivos de 10–20 ml."
+      category="Diagnóstico"
+    />
+    <FlashCard
+      front="¿Qué especie de Candida es resistente a Anfotericina B (no a azoles)?"
+      back="C. lusitaniae — resistente a Anfotericina B, sensible a azoles."
+      category="Resistencias"
+    />
+    <FlashCard
+      front="¿A qué especie de Candida se asocia el catéter venoso central y los neonatos?"
+      back="C. parapsilosis — la más asociada a catéteres y neonatos de bajo peso."
+      category="Epidemiología"
+    />
+  </div>
+</Layout>
+
+<style>
+  .page-intro { margin-bottom: 2rem; }
+  .page-intro__text { color: var(--text-muted); font-size: 1.05rem; }
+  .danger-text { color: var(--danger); font-weight: 600; }
+
+  .clinical-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .clinical-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.15rem;
+    box-shadow: var(--shadow);
+    border-top: 3px solid var(--secondary);
+  }
+  .clinical-card h4 { margin: 0 0 0.5rem; color: #7a5c00; }
+  .clinical-card p { margin: 0; font-size: 0.9rem; }
+
+  .risk-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.75rem 0 1.5rem;
+  }
+  .risk-tag {
+    background: #fdecea;
+    border: 1px solid #f5c6c6;
+    color: var(--danger);
+    padding: 0.3rem 0.8rem;
+    border-radius: 99px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .flashcards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+</style>

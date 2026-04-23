@@ -1,0 +1,306 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import InfoBox from '../components/InfoBox.astro';
+import FlashCard from '../components/FlashCard.astro';
+---
+
+<Layout title="API 20 C AUX" description="Sistema de identificación de levaduras bioMérieux — procedimiento, pruebas y lectura">
+  <div class="page-intro animate-in">
+    <h1>🧫 API 20 C AUX</h1>
+    <p class="page-intro__text">Sistema de <strong>bioMérieux</strong> para la identificación precisa de levaduras clínicamente relevantes.</p>
+  </div>
+
+  <!-- QUÉ ES -->
+  <SectionHeader title="1. Qué es el API 20 C AUX" icon="🔬" color="danger" />
+
+  <ul>
+    <li><strong>Fabricante:</strong> bioMérieux.</li>
+    <li><strong>Principio:</strong> 19 pruebas de <strong>asimilación de carbohidratos</strong> + 1 control sin fuente de carbono.</li>
+    <li>Las levaduras solo crecen si son capaces de usar cada sustrato como <strong>única fuente de carbono</strong>.</li>
+    <li><strong>Lectura:</strong> comparar turbidez con el control (cúpula 0).</li>
+    <li><strong>Identificación:</strong> Analytical Profile Index (apiweb™ o ATB™).</li>
+  </ul>
+
+  <InfoBox type="important" title="Contenido del kit (25 tests)">
+    <ul>
+      <li>25 strips API 20 C AUX</li>
+      <li>25 cajas de incubación</li>
+      <li>25 ampollas de API C Medium</li>
+      <li>25 hojas de resultados</li>
+      <li>1 prospecto</li>
+    </ul>
+  </InfoBox>
+
+  <!-- MEDIO -->
+  <SectionHeader title="2. Composición del Medio (API C Medium)" icon="⚗️" color="danger" />
+
+  <p>El API C Medium contiene: sulfato amónico, fosfatos, NaCl, CaCl₂, MgSO₄, aminoácidos (histidina, triptófano, metionina), vitaminas, elementos traza y agente gelificante. <strong>pH final: 6.4–6.8.</strong></p>
+
+  <InfoBox type="tip" title="Importante sobre el medio">
+    <ul>
+      <li>No requiere calentamiento previo.</li>
+      <li>Dejarlo atemperar antes de usar.</li>
+      <li><strong>No agitar.</strong></li>
+    </ul>
+  </InfoBox>
+
+  <!-- LAS 20 PRUEBAS -->
+  <SectionHeader title="3. Las 20 Pruebas (Cúpulas)" icon="📋" color="danger" />
+
+  <div class="cupulas-grid">
+    {[
+      { num: '0', cod: '—', name: 'Control (sin carbono)' },
+      { num: '1', cod: 'GLU', name: 'D-Glucosa' },
+      { num: '2', cod: 'GLY', name: 'Glicerol' },
+      { num: '3', cod: '2KG', name: '2-Cetogluconato cálcico' },
+      { num: '4', cod: 'ARA', name: 'L-Arabinosa' },
+      { num: '5', cod: 'XYL', name: 'D-Xilosa' },
+      { num: '6', cod: 'ADO', name: 'Adonitol' },
+      { num: '7', cod: 'XLT', name: 'Xilitol' },
+      { num: '8', cod: 'GAL', name: 'D-Galactosa' },
+      { num: '9', cod: 'INO', name: 'Inositol' },
+      { num: '10', cod: 'SOR', name: 'D-Sorbitol' },
+      { num: '11', cod: 'MDG', name: 'Metil-α-D-glucopiranósido' },
+      { num: '12', cod: 'NAG', name: 'N-Acetilglucosamina' },
+      { num: '13', cod: 'CEL', name: 'D-Celobiosa' },
+      { num: '14', cod: 'LAC', name: 'D-Lactosa (origen bovino)' },
+      { num: '15', cod: 'MAL', name: 'D-Maltosa' },
+      { num: '16', cod: 'SAC', name: 'D-Sacarosa' },
+      { num: '17', cod: 'TRE', name: 'D-Trehalosa' },
+      { num: '18', cod: 'MLZ', name: 'D-Melezitosa' },
+      { num: '19', cod: 'RAF', name: 'D-Rafinosa' },
+    ].map(c => (
+      <div class:list={['cupula', c.num === '0' && 'cupula--control']}>
+        <span class="cupula__num">{c.num}</span>
+        <span class="cupula__cod">{c.cod}</span>
+        <span class="cupula__name">{c.name}</span>
+      </div>
+    ))}
+  </div>
+
+  <!-- PROCEDIMIENTO -->
+  <SectionHeader title="4. Procedimiento Paso a Paso" icon="📝" color="danger" />
+
+  <div class="procedure-steps">
+    <div class="proc-step">
+      <div class="proc-num">1</div>
+      <div class="proc-content">
+        <h4>Preparar la cepa</h4>
+        <p>Cultivo puro en Sabouraud durante <strong>24–48 horas</strong>.</p>
+      </div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">2</div>
+      <div class="proc-content">
+        <h4>Preparar la suspensión</h4>
+        <p>En API Suspension Medium o NaCl 0,85%. Turbidez = <strong>McFarland nº 2</strong>.</p>
+      </div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">3</div>
+      <div class="proc-content">
+        <h4>Inocular</h4>
+        <p>Pipetear la suspensión con API C Medium en cada cúpula.</p>
+      </div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">4</div>
+      <div class="proc-content">
+        <h4>Incubar</h4>
+        <p>Temperatura indicada (generalmente <strong>30°C o 37°C</strong> según la especie).</p>
+      </div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">5</div>
+      <div class="proc-content">
+        <h4>Leer</h4>
+        <p>Comparar cada cúpula con la <strong>cúpula 0</strong> (control). Positivo (+) si turbidez ≥ control.</p>
+      </div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">6</div>
+      <div class="proc-content">
+        <h4>Identificar</h4>
+        <p>Con el Analytical Profile Index o <strong>apiweb™</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADVERTENCIAS -->
+  <SectionHeader title="5. Advertencias Importantes" icon="⚠️" color="danger" />
+
+  <InfoBox type="warning" title="Precauciones obligatorias">
+    <ul>
+      <li><strong>Uso diagnóstico in vitro exclusivamente.</strong></li>
+      <li>Solo personal cualificado.</li>
+      <li>Contiene productos de origen animal: tratar como potencialmente infeccioso.</li>
+      <li>Todas las muestras y cultivos de levaduras deben considerarse infecciosos — técnica aséptica obligatoria.</li>
+    </ul>
+  </InfoBox>
+
+  <!-- CLAVE DE IDENTIFICACIÓN -->
+  <SectionHeader title="6. Tabla de Asimilación — Especies Principales" icon="🔭" color="danger" />
+
+  <p>La lectura de las 19 cúpulas genera un perfil numérico que se consulta en el <strong>Analytical Profile Index</strong>. Las especies de <em>Candida</em> tienen perfiles bien caracterizados.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Especie</th>
+          <th>GLU</th>
+          <th>GLY</th>
+          <th>GAL</th>
+          <th>MAL</th>
+          <th>SAC</th>
+          <th>TRE</th>
+          <th>LAC</th>
+          <th>RAF</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><em>C. albicans</em></strong></td>
+          <td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>−</td><td>−</td>
+        </tr>
+        <tr>
+          <td><em>C. tropicalis</em></td>
+          <td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>−</td><td>−</td>
+        </tr>
+        <tr>
+          <td><em>C. glabrata</em></td>
+          <td>+</td><td>−</td><td>−</td><td>−</td><td>−</td><td>+</td><td>−</td><td>−</td>
+        </tr>
+        <tr>
+          <td><em>C. parapsilosis</em></td>
+          <td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>−</td><td>−</td>
+        </tr>
+        <tr>
+          <td><em>C. krusei</em></td>
+          <td>+</td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td><td>−</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">* Tabla orientativa. La identificación definitiva debe realizarse con el Analytical Profile Index completo de las 19 pruebas.</p>
+
+  <!-- FLASHCARDS -->
+  <SectionHeader title="Fichas de Repaso" icon="🃏" color="danger" subtitle="Toca cada tarjeta para ver la respuesta" />
+
+  <div class="flashcards-grid">
+    <FlashCard
+      front="¿Cuántas pruebas de asimilación tiene el API 20 C AUX y qué es la cúpula 0?"
+      back="19 pruebas de asimilación + 1 control (cúpula 0 = sin fuente de carbono). Total 20 cúpulas."
+      category="API 20 C AUX"
+    />
+    <FlashCard
+      front="¿Qué estándar de turbidez se usa para preparar la suspensión en el API 20C?"
+      back="McFarland nº 2 (~6×10⁸ UFC/ml)"
+      category="API 20 C AUX"
+    />
+    <FlashCard
+      front="¿Cómo se lee un resultado POSITIVO en el API 20 C AUX?"
+      back="La cúpula muestra turbidez IGUAL O MAYOR que la cúpula 0 (control sin carbono)."
+      category="API 20 C AUX"
+    />
+    <FlashCard
+      front="¿Cuál es el sustrato de la cúpula GLU y cuál es el de RAF?"
+      back="GLU = D-Glucosa (cúpula 1). RAF = D-Rafinosa (cúpula 19)."
+      category="API 20 C AUX"
+    />
+    <FlashCard
+      front="¿Cuál es el pH del API C Medium y qué precaución hay al usarlo?"
+      back="pH 6.4–6.8. No requiere calentamiento, dejar atemperar y NO AGITAR."
+      category="API 20 C AUX"
+    />
+    <FlashCard
+      front="¿Qué significa asimilación positiva en el API 20 C AUX?"
+      back="El microorganismo puede usar ese sustrato como ÚNICA fuente de carbono para crecer."
+      category="API 20 C AUX"
+    />
+  </div>
+</Layout>
+
+<style>
+  .page-intro { margin-bottom: 2rem; }
+  .page-intro__text { color: var(--text-muted); font-size: 1.05rem; }
+
+  .cupulas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .cupula {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+  }
+  .cupula--control {
+    border-color: var(--danger);
+    background: #fdecea;
+  }
+  .cupula__num {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .cupula--control .cupula__num { background: var(--danger); }
+  .cupula__cod { font-weight: 700; color: var(--accent); min-width: 2.5rem; font-size: 0.82rem; font-family: var(--font-mono); }
+  .cupula__name { color: var(--text-muted); }
+
+  .procedure-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .proc-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.9rem 1.15rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+  }
+  .proc-num {
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    background: var(--danger);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .proc-content h4 { margin: 0 0 0.25rem; }
+  .proc-content p { margin: 0; font-size: 0.9rem; color: var(--text-muted); }
+
+  .table-note { font-size: 0.8rem; color: var(--text-muted); margin-top: -0.5rem; font-style: italic; }
+
+  .flashcards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+</style>

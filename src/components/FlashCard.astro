@@ -1,0 +1,99 @@
+---
+interface Props {
+  front: string;
+  back: string;
+  category?: string;
+}
+const { front, back, category } = Astro.props;
+---
+
+<div class="flashcard" role="button" tabindex="0" aria-label="Tarjeta de repaso — pulsa para voltear">
+  <div class="flashcard__inner">
+    <div class="flashcard__face flashcard__face--front">
+      {category && <span class="flashcard__cat">{category}</span>}
+      <p class="flashcard__text">{front}</p>
+      <span class="flashcard__hint">Toca para ver respuesta</span>
+    </div>
+    <div class="flashcard__face flashcard__face--back">
+      {category && <span class="flashcard__cat">{category}</span>}
+      <p class="flashcard__text">{back}</p>
+      <span class="flashcard__hint">Toca para volver</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.flashcard').forEach(card => {
+    const flip = () => card.classList.toggle('flipped');
+    card.addEventListener('click', flip);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+  });
+</script>
+
+<style>
+  .flashcard {
+    perspective: 1000px;
+    height: 180px;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+  }
+  .flashcard:focus-visible .flashcard__inner { box-shadow: 0 0 0 3px var(--primary); }
+
+  .flashcard__inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .flashcard.flipped .flashcard__inner { transform: rotateY(180deg); }
+
+  .flashcard__face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border: 2px solid var(--border);
+    gap: 0.5rem;
+  }
+  .flashcard__face--front {
+    background: linear-gradient(135deg, #f5f9f6, #eaf4ee);
+    border-color: var(--primary-light);
+  }
+  .flashcard__face--back {
+    background: linear-gradient(135deg, #f9f5e6, #f4edcc);
+    border-color: var(--secondary);
+    transform: rotateY(180deg);
+  }
+
+  .flashcard__cat {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    font-weight: 600;
+    align-self: flex-start;
+  }
+  .flashcard__text {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .flashcard__hint {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: auto;
+  }
+</style>

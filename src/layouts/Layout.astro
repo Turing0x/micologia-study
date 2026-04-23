@@ -1,0 +1,305 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = 'Micología Clínica', description = 'Guía de estudio interactiva de Micología Clínica' } = Astro.props;
+
+const navLinks = [
+  { href: '/', label: 'Inicio', icon: '🏠' },
+  { href: '/generalidades', label: 'Generalidades', icon: '🔬' },
+  { href: '/candidiasis', label: 'Candidiasis', icon: '🦠' },
+  { href: '/dermatofitosis', label: 'Dermatofitos & Aspergillus', icon: '🦶' },
+  { href: '/api20c', label: 'API 20 C AUX', icon: '🧫' },
+  { href: '/quiz', label: 'Quiz', icon: '❓' },
+  { href: '/glosario', label: 'Glosario', icon: '📖' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title} — Micología Clínica</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="/" class="logo">
+          <span class="logo-icon">🍄</span>
+          <span class="logo-text">Micología Clínica</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="main-nav" id="main-nav">
+          {navLinks.map(link => (
+            <a
+              href={link.href}
+              class:list={['nav-link', { active: currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) }]}
+            >
+              <span class="nav-icon">{link.icon}</span>
+              <span class="nav-label">{link.label}</span>
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <p>🍄 Micología Clínica · Contenido basado en materiales de clase (A. Sampedro) · ¡Ánimo en el examen!</p>
+    </footer>
+
+    <script>
+      const toggle = document.getElementById('nav-toggle');
+      const nav = document.getElementById('main-nav');
+      toggle?.addEventListener('click', () => {
+        const open = nav?.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+      // Close nav on link click (mobile)
+      nav?.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => nav.classList.remove('open'));
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --primary: #4a7c59;
+    --primary-light: #6aaa7e;
+    --primary-dark: #2d5238;
+    --secondary: #c9a227;
+    --secondary-light: #e8c060;
+    --accent: #8b2fc9;
+    --accent-light: #b060e8;
+    --danger: #c94040;
+    --danger-light: #e86060;
+    --bg: #faf9f6;
+    --bg-card: #ffffff;
+    --text: #2c2c2c;
+    --text-muted: #666;
+    --border: #e0ddd6;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-lg: 0 4px 20px rgba(0,0,0,0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --font: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --nav-h: 64px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── Header ─── */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    height: var(--nav-h);
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .logo-icon { font-size: 1.5rem; }
+  .logo-text { display: none; }
+
+  @media (min-width: 480px) {
+    .logo-text { display: block; }
+  }
+
+  .main-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    margin-left: auto;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.65rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .nav-link:hover { background: #f0ede8; color: var(--text); }
+  .nav-link.active { background: var(--primary); color: #fff; }
+  .nav-icon { font-size: 1rem; }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-left: auto;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.2s;
+  }
+
+  @media (max-width: 860px) {
+    .nav-toggle { display: flex; }
+    .main-nav {
+      display: none;
+      position: absolute;
+      top: var(--nav-h);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.25rem 1rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+      box-shadow: var(--shadow-lg);
+    }
+    .main-nav.open { display: flex; }
+    .nav-link { width: 100%; font-size: 0.95rem; padding: 0.55rem 0.75rem; }
+    .nav-label { display: block; }
+  }
+
+  /* ─── Main ─── */
+  .main-content {
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 3rem;
+  }
+
+  /* ─── Footer ─── */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 1.25rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+
+  /* ─── Typography ─── */
+  h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); margin: 0 0 0.5rem; color: var(--primary-dark); }
+  h2 { font-size: clamp(1.3rem, 3vw, 1.8rem); margin: 2rem 0 0.75rem; color: var(--primary-dark); }
+  h3 { font-size: clamp(1.05rem, 2.5vw, 1.3rem); margin: 1.5rem 0 0.5rem; color: var(--text); }
+  h4 { font-size: 1rem; margin: 1rem 0 0.35rem; color: var(--text); }
+  p { margin: 0 0 0.9rem; }
+  ul, ol { padding-left: 1.5rem; margin: 0 0 0.9rem; }
+  li { margin-bottom: 0.3rem; }
+  strong { color: var(--primary-dark); }
+  em { color: var(--accent); font-style: italic; }
+  code { background: #f0ede8; padding: 0.1em 0.4em; border-radius: 4px; font-size: 0.88em; font-family: var(--font-mono); }
+
+  /* ─── Tables ─── */
+  .table-wrap { overflow-x: auto; margin: 1rem 0 1.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+  th { background: var(--primary); color: #fff; padding: 0.65rem 0.9rem; text-align: left; font-weight: 600; }
+  td { padding: 0.55rem 0.9rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8f5f0; }
+
+  /* ─── Cards ─── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  /* ─── Section divider ─── */
+  .section-divider {
+    border: none;
+    border-top: 2px solid var(--border);
+    margin: 2.5rem 0;
+  }
+
+  /* ─── Badges ─── */
+  .badge {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .badge-primary { background: var(--primary); color: #fff; }
+  .badge-secondary { background: var(--secondary); color: #fff; }
+  .badge-accent { background: var(--accent); color: #fff; }
+  .badge-danger { background: var(--danger); color: #fff; }
+
+  /* ─── Animations ─── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-in { animation: fadeInUp 0.4s ease both; }
+  .delay-1 { animation-delay: 0.05s; }
+  .delay-2 { animation-delay: 0.1s; }
+  .delay-3 { animation-delay: 0.15s; }
+  .delay-4 { animation-delay: 0.2s; }
+  .delay-5 { animation-delay: 0.25s; }
+  .delay-6 { animation-delay: 0.3s; }
+</style>

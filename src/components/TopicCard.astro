@@ -1,0 +1,95 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  icon: string;
+  color?: 'primary' | 'secondary' | 'accent' | 'danger';
+  tags?: string[];
+}
+const { title, description, href, icon, color = 'primary', tags = [] } = Astro.props;
+---
+
+<a href={href} class={`topic-card topic-card--${color}`}>
+  <div class="topic-card__icon">{icon}</div>
+  <div class="topic-card__body">
+    <h3 class="topic-card__title">{title}</h3>
+    <p class="topic-card__desc">{description}</p>
+    {tags.length > 0 && (
+      <div class="topic-card__tags">
+        {tags.map(tag => <span class="topic-tag">{tag}</span>)}
+      </div>
+    )}
+  </div>
+  <span class="topic-card__arrow">→</span>
+</a>
+
+<style>
+  .topic-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .topic-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+  .topic-card--primary:hover { border-color: var(--primary); }
+  .topic-card--secondary:hover { border-color: var(--secondary); }
+  .topic-card--accent:hover { border-color: var(--accent); }
+  .topic-card--danger:hover { border-color: var(--danger); }
+
+  .topic-card--primary .topic-card__icon { color: var(--primary); }
+  .topic-card--secondary .topic-card__icon { color: var(--secondary); }
+  .topic-card--accent .topic-card__icon { color: var(--accent); }
+  .topic-card--danger .topic-card__icon { color: var(--danger); }
+
+  .topic-card__icon {
+    font-size: 2.2rem;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 0.1rem;
+  }
+  .topic-card__body { flex: 1; min-width: 0; }
+  .topic-card__title {
+    margin: 0 0 0.35rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .topic-card__desc {
+    margin: 0 0 0.6rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .topic-card__tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .topic-tag {
+    background: #f0ede8;
+    border-radius: 99px;
+    padding: 0.1rem 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .topic-card__arrow {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    transition: transform 0.2s, color 0.2s;
+  }
+  .topic-card:hover .topic-card__arrow {
+    transform: translateX(4px);
+    color: var(--text);
+  }
+</style>

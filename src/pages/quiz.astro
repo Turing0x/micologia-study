@@ -1,0 +1,431 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { quizQuestions } from '../data/quiz';
+
+const totalQuestions = quizQuestions.length;
+const questionsJson = JSON.stringify(quizQuestions);
+---
+
+<Layout title="Quiz" description="Autoevaluación interactiva de Micología Clínica — 32 preguntas de todos los temas">
+  <div class="page-intro animate-in">
+    <h1>❓ Quiz de Autoevaluación</h1>
+    <p class="page-intro__text">{totalQuestions} preguntas tipo test de todos los temas. ¡Pon a prueba tu conocimiento!</p>
+  </div>
+
+  <!-- PANTALLA INICIO -->
+  <div id="quiz-start" class="quiz-screen quiz-start">
+    <div class="start-card">
+      <div class="start-icon">🍄</div>
+      <h2>¿Listo para el quiz?</h2>
+      <div class="quiz-info-grid">
+        <div class="quiz-info-item">
+          <span class="qi-num">{totalQuestions}</span>
+          <span class="qi-label">preguntas</span>
+        </div>
+        <div class="quiz-info-item">
+          <span class="qi-num">5</span>
+          <span class="qi-label">temas</span>
+        </div>
+        <div class="quiz-info-item">
+          <span class="qi-num">4</span>
+          <span class="qi-label">opciones</span>
+        </div>
+      </div>
+      <ul class="start-topics">
+        <li>🔬 Generalidades de Micología</li>
+        <li>🦠 Candidiasis</li>
+        <li>🦶 Dermatofitosis</li>
+        <li>💨 Aspergilosis</li>
+        <li>🧫 API 20 C AUX</li>
+      </ul>
+      <button id="start-btn" class="btn-start">Comenzar Quiz →</button>
+    </div>
+  </div>
+
+  <!-- PANTALLA PREGUNTA -->
+  <div id="quiz-question" class="quiz-screen" style="display:none">
+    <div class="quiz-header">
+      <div class="progress-info">
+        <span id="q-counter" class="q-counter">Pregunta 1 / {totalQuestions}</span>
+        <span id="q-topic" class="q-topic-badge">Generalidades</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div id="progress-bar" class="progress-bar" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <p id="question-text" class="question-text"></p>
+      <div id="options-list" class="options-list"></div>
+      <div id="feedback-box" class="feedback-box" style="display:none">
+        <div class="feedback-header">
+          <span id="feedback-icon"></span>
+          <strong id="feedback-title"></strong>
+        </div>
+        <p id="feedback-explanation" class="feedback-explanation"></p>
+        <button id="next-btn" class="btn-next">Siguiente →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANTALLA RESULTADO -->
+  <div id="quiz-result" class="quiz-screen" style="display:none">
+    <div class="result-card">
+      <div id="result-emoji" class="result-emoji">🏆</div>
+      <h2 id="result-title">¡Excelente!</h2>
+      <div class="result-score-wrap">
+        <div id="result-score" class="result-score">0 / 0</div>
+        <div id="result-pct" class="result-pct">100%</div>
+      </div>
+      <div id="result-msg" class="result-msg"></div>
+      <div class="result-breakdown" id="result-breakdown"></div>
+      <div class="result-actions">
+        <button id="retry-btn" class="btn-start">Repetir Quiz →</button>
+        <a href="/" class="btn-home">← Volver al inicio</a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script define:vars={{ questionsJson }}>
+  const ALL_QUESTIONS = JSON.parse(questionsJson);
+
+  let questions = [];
+  let currentIndex = 0;
+  let score = 0;
+  let answered = false;
+  let topicScores = {};
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function startQuiz() {
+    questions = shuffle(ALL_QUESTIONS);
+    currentIndex = 0;
+    score = 0;
+    answered = false;
+    topicScores = {};
+
+    document.getElementById('quiz-start').style.display = 'none';
+    document.getElementById('quiz-result').style.display = 'none';
+    document.getElementById('quiz-question').style.display = 'block';
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const q = questions[currentIndex];
+    const total = questions.length;
+    const pct = (currentIndex / total) * 100;
+
+    document.getElementById('q-counter').textContent = `Pregunta ${currentIndex + 1} / ${total}`;
+    document.getElementById('q-topic').textContent = q.topic;
+    document.getElementById('progress-bar').style.width = `${pct}%`;
+    document.getElementById('question-text').textContent = q.question;
+
+    const optsList = document.getElementById('options-list');
+    optsList.innerHTML = '';
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = opt;
+      btn.dataset.index = i;
+      btn.addEventListener('click', () => selectOption(i, btn));
+      optsList.appendChild(btn);
+    });
+
+    const feedback = document.getElementById('feedback-box');
+    feedback.style.display = 'none';
+    feedback.className = 'feedback-box';
+    answered = false;
+  }
+
+  function selectOption(selectedIdx, btn) {
+    if (answered) return;
+    answered = true;
+
+    const q = questions[currentIndex];
+    const isCorrect = selectedIdx === q.correct;
+    const topic = q.topic;
+
+    if (!topicScores[topic]) topicScores[topic] = { correct: 0, total: 0 };
+    topicScores[topic].total++;
+    if (isCorrect) { score++; topicScores[topic].correct++; }
+
+    // Mark all buttons
+    document.querySelectorAll('.option-btn').forEach((b, i) => {
+      b.disabled = true;
+      if (i === q.correct) b.classList.add('correct');
+      else if (i === selectedIdx && !isCorrect) b.classList.add('incorrect');
+    });
+
+    const feedbackBox = document.getElementById('feedback-box');
+    feedbackBox.style.display = 'block';
+    feedbackBox.className = `feedback-box ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+    document.getElementById('feedback-icon').textContent = isCorrect ? '✅' : '❌';
+    document.getElementById('feedback-title').textContent = isCorrect ? '¡Correcto!' : 'Incorrecto';
+    document.getElementById('feedback-explanation').textContent = q.explanation;
+  }
+
+  function nextQuestion() {
+    currentIndex++;
+    if (currentIndex >= questions.length) {
+      showResults();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function showResults() {
+    document.getElementById('quiz-question').style.display = 'none';
+    document.getElementById('quiz-result').style.display = 'block';
+
+    const total = questions.length;
+    const pct = Math.round((score / total) * 100);
+
+    let emoji, title, msg;
+    if (pct >= 90) { emoji = '🏆'; title = '¡Sobresaliente!'; msg = 'Dominas la micología clínica. ¡Estás listo para el examen!'; }
+    else if (pct >= 75) { emoji = '🌟'; title = '¡Muy bien!'; msg = 'Buen nivel. Repasa los temas donde fallaste.'; }
+    else if (pct >= 60) { emoji = '👍'; title = 'Bien'; msg = 'Aprobado pero hay margen de mejora. ¡A repasar!'; }
+    else if (pct >= 40) { emoji = '📚'; title = 'Necesitas repasar'; msg = 'Dedica más tiempo a los temas más flojos.'; }
+    else { emoji = '💪'; title = '¡Ánimo!'; msg = 'No te rindas. Repasa el contenido y vuelve a intentarlo.'; }
+
+    document.getElementById('result-emoji').textContent = emoji;
+    document.getElementById('result-title').textContent = title;
+    document.getElementById('result-score').textContent = `${score} / ${total}`;
+    document.getElementById('result-pct').textContent = `${pct}%`;
+    document.getElementById('result-msg').textContent = msg;
+
+    // Topic breakdown
+    const breakdown = document.getElementById('result-breakdown');
+    breakdown.innerHTML = '<h4>Desglose por tema:</h4>';
+    Object.entries(topicScores).forEach(([topic, s]) => {
+      const topicPct = Math.round((s.correct / s.total) * 100);
+      const color = topicPct >= 75 ? '#4a7c59' : topicPct >= 50 ? '#c9a227' : '#c94040';
+      const div = document.createElement('div');
+      div.className = 'breakdown-item';
+      div.innerHTML = `
+        <div class="breakdown-label">
+          <span>${topic}</span>
+          <span>${s.correct}/${s.total} (${topicPct}%)</span>
+        </div>
+        <div class="breakdown-bar-wrap">
+          <div class="breakdown-bar" style="width:${topicPct}%; background:${color}"></div>
+        </div>
+      `;
+      breakdown.appendChild(div);
+    });
+  }
+
+  document.getElementById('start-btn')?.addEventListener('click', startQuiz);
+  document.getElementById('next-btn')?.addEventListener('click', nextQuestion);
+  document.getElementById('retry-btn')?.addEventListener('click', startQuiz);
+</script>
+
+<style>
+  .page-intro { margin-bottom: 2rem; }
+  .page-intro__text { color: var(--text-muted); font-size: 1.05rem; }
+
+  .quiz-screen { max-width: 700px; margin: 0 auto; }
+
+  /* ── Start ── */
+  .start-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+  }
+  .start-icon { font-size: 3.5rem; margin-bottom: 0.5rem; }
+  .start-card h2 { margin: 0 0 1.5rem; }
+
+  .quiz-info-grid {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .quiz-info-item { display: flex; flex-direction: column; align-items: center; }
+  .qi-num { font-size: 2rem; font-weight: 700; color: var(--primary); line-height: 1; }
+  .qi-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .start-topics {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    text-align: left;
+    display: inline-block;
+  }
+  .start-topics li { padding: 0.3rem 0; font-size: 0.95rem; }
+
+  .btn-start {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+  }
+  .btn-start:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+  /* ── Question ── */
+  .quiz-header { margin-bottom: 1.25rem; }
+  .progress-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .q-counter { font-weight: 600; font-size: 0.9rem; color: var(--text-muted); }
+  .q-topic-badge {
+    background: var(--primary);
+    color: #fff;
+    border-radius: 99px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .progress-bar-wrap {
+    height: 6px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    border-radius: 99px;
+    transition: width 0.3s ease;
+  }
+
+  .question-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem 1.75rem 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .question-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+  .option-btn {
+    background: #f5f3ee;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .option-btn:not(:disabled):hover {
+    background: #eaf4ee;
+    border-color: var(--primary);
+    transform: translateX(4px);
+  }
+  .option-btn.correct {
+    background: #e8f5e9;
+    border-color: var(--primary);
+    color: var(--primary-dark);
+    font-weight: 600;
+  }
+  .option-btn.correct::before { content: '✓ '; }
+  .option-btn.incorrect {
+    background: #fdecea;
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+  .option-btn.incorrect::before { content: '✗ '; }
+  .option-btn:disabled { cursor: not-allowed; opacity: 0.85; }
+
+  .feedback-box {
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.15rem;
+    border-left: 4px solid;
+    margin-top: 1rem;
+  }
+  .feedback-correct { background: #e8f5e9; border-color: var(--primary); }
+  .feedback-incorrect { background: #fdecea; border-color: var(--danger); }
+  .feedback-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 1rem; }
+  .feedback-explanation { font-size: 0.9rem; margin: 0 0 1rem; line-height: 1.6; }
+
+  .btn-next {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-next:hover { background: var(--primary-dark); }
+
+  /* ── Result ── */
+  .result-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+  }
+  .result-emoji { font-size: 4rem; margin-bottom: 0.5rem; }
+  .result-card h2 { margin: 0 0 1rem; }
+  .result-score-wrap { display: flex; justify-content: center; align-items: baseline; gap: 1rem; margin-bottom: 1rem; }
+  .result-score { font-size: 2.5rem; font-weight: 700; color: var(--primary-dark); }
+  .result-pct { font-size: 1.5rem; font-weight: 700; color: var(--text-muted); }
+  .result-msg { color: var(--text-muted); margin-bottom: 2rem; font-size: 1rem; }
+
+  .result-breakdown { text-align: left; margin-bottom: 2rem; }
+  .result-breakdown h4 { margin: 0 0 1rem; }
+  .breakdown-item { margin-bottom: 0.75rem; }
+  .breakdown-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+  }
+  .breakdown-bar-wrap { height: 8px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .breakdown-bar { height: 100%; border-radius: 99px; transition: width 0.4s ease; }
+
+  .result-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-home {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    border-radius: var(--radius-sm);
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .btn-home:hover { background: var(--primary); color: #fff; }
+</style>

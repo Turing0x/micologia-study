@@ -1,0 +1,237 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import InfoBox from '../components/InfoBox.astro';
+import FlashCard from '../components/FlashCard.astro';
+---
+
+<Layout title="Generalidades" description="Morfología fúngica, diagnóstico microbiológico y clasificación de las micosis">
+  <div class="page-intro animate-in">
+    <h1>🔬 Generalidades de Micología Clínica</h1>
+    <p class="page-intro__text">Morfología fúngica, pasos del diagnóstico microbiológico y clasificación clínica de las micosis.</p>
+  </div>
+
+  <!-- 1. MORFOLOGÍA -->
+  <SectionHeader title="1. Morfología de los Hongos" icon="🍄" color="primary" />
+
+  <p>Los hongos se dividen en dos grandes grupos morfológicos según su forma de crecimiento:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Características</th>
+          <th>Ejemplos clínicos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Levaduras</strong> (unicelulares)</td>
+          <td>Forma redondeada u oval. Reproducción por gemación (blastoconidios). Algunas forman pseudohifas o hifas verdaderas. Colonias cremosas.</td>
+          <td><em>Candida</em>, <em>Cryptococcus</em></td>
+        </tr>
+        <tr>
+          <td><strong>Hongos filamentosos / Mohos</strong> (pluricelulares)</td>
+          <td>Forman hifas y micelio. Se reproducen por conidias. Colonias vellosas o pulverulentas.</td>
+          <td><em>Aspergillus</em>, Dermatofitos</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <InfoBox type="exam" title="Clave de examen — Dimorfismo">
+    <p>Algunas especies son <strong>dimórficas</strong>: levadura a 37°C (en el tejido humano) y moho a 25°C (en el ambiente). Patógenos dimórficos importantes: <em>Histoplasma capsulatum</em>, <em>Sporothrix schenckii</em>, <em>Coccidioides immitis</em>, <em>Paracoccidioides brasiliensis</em>.</p>
+  </InfoBox>
+
+  <!-- 2. DIAGNÓSTICO -->
+  <SectionHeader title="2. Diagnóstico Microbiológico — 6 Pasos" icon="🧪" color="primary" />
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Muestras de calidad</h4>
+        <p>La toma debe ser adecuada al foco de infección: escobillón (mucosas), raspado de piel/uñas, arrancar cabello con pinzas, BAL, biopsia...</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Examen directo microscópico</h4>
+        <p>Bajo coste, alta sensibilidad. Tinciones: KOH 10–30% (+ tinta Parker), Blanco de calcoflúor (fluorescente), Tinción de Gram, Azul de metileno.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Cultivo</h4>
+        <p>Sabouraud (± antibióticos), Mycobiotic agar. Temperatura e incubación según el microorganismo sospechado.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Identificación</h4>
+        <p>Macroscópica (color, textura, velocidad), microscópica (conidias, hifas) y pruebas metabólicas (ureasa, API 20 C AUX).</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h4>Diagnóstico serológico</h4>
+        <p>Detección de antígenos (Ag Cryptococcus, Galactomanano, β-D-Glucano) o anticuerpos.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h4>Diagnóstico molecular</h4>
+        <p>PCR: alta sensibilidad y especificidad. Útil en BAL y sangre.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Tomas de muestra según foco de infección</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Infección</th><th>Muestra recomendada</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Mucositis candidósica (oral/vaginal)</td><td>Escobillón con medio de transporte</td></tr>
+        <tr><td>Lesiones por dermatofitos (piel/uñas)</td><td>Raspado de piel/uñas, arrancar cabello con pinzas</td></tr>
+        <tr><td>Tiña inflamatoria supurativa (querion)</td><td>Pus con jeringa o escobillón</td></tr>
+        <tr><td>Pitiriasis versicolor</td><td>Cinta adhesiva sobre la lesión</td></tr>
+        <tr><td>Lesiones subcutáneas</td><td>Biopsia</td></tr>
+        <tr><td>Infecciones respiratorias</td><td>BAL (lavado broncoalveolar)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Medios de cultivo y condiciones</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Microorganismo</th><th>Temperatura</th><th>Tiempo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><em>Candida</em></td><td>35–37°C</td><td>24–48 h</td></tr>
+        <tr><td>Dermatofitos</td><td>30°C</td><td>Hasta 4 semanas</td></tr>
+        <tr><td><em>Aspergillus</em></td><td>25–30°C</td><td>2–6 semanas</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 3. CLASIFICACIÓN CLÍNICA -->
+  <SectionHeader title="3. Clasificación Clínica de las Micosis" icon="🗂️" color="primary" />
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Tipo</th><th>Localización</th><th>Patógenos principales</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Superficial</strong></td>
+          <td>Capa córnea, cabello, uñas, mucosas</td>
+          <td><em>Malassezia</em>, <em>Trichophyton</em>, <em>Candida</em></td>
+        </tr>
+        <tr>
+          <td><strong>Subcutánea</strong></td>
+          <td>Dermis, tejido subcutáneo, músculo</td>
+          <td><em>Sporothrix</em>, <em>Fonsecaea</em>, <em>Madurella</em></td>
+        </tr>
+        <tr>
+          <td><strong>Sistémica o profunda</strong></td>
+          <td>Uno o más órganos profundos</td>
+          <td><em>Histoplasma</em>, <em>Coccidioides</em>, <em>Paracoccidioides</em></td>
+        </tr>
+        <tr>
+          <td><strong>Oportunista</strong></td>
+          <td>Variable (inmunosupresión)</td>
+          <td><em>Candida</em>, <em>Aspergillus</em>, <em>Cryptococcus</em>, <em>Rhizopus</em></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FLASHCARDS -->
+  <SectionHeader title="Fichas de Repaso" icon="🃏" color="primary" subtitle="Toca cada tarjeta para ver la respuesta" />
+
+  <div class="flashcards-grid">
+    <FlashCard
+      front="¿Cuántos pasos tiene el diagnóstico microbiológico de las micosis?"
+      back="6 pasos: Muestra de calidad → Examen directo → Cultivo → Identificación → Serología → Molecular"
+      category="Generalidades"
+    />
+    <FlashCard
+      front="¿Qué temperatura y tiempo se usa para cultivar dermatofitos?"
+      back="30°C durante hasta 4 semanas en Sabouraud"
+      category="Cultivo"
+    />
+    <FlashCard
+      front="¿Qué tinción usa fluorescencia y detecta quitina fúngica?"
+      back="Blanco de calcoflúor — requiere microscopio de fluorescencia"
+      category="Tinciones"
+    />
+    <FlashCard
+      front="Los hongos dimórficos, ¿en qué forma crecen a 37°C?"
+      back="Como LEVADURA (a temperatura corporal). A 25°C crecen como MOHO."
+      category="Dimorfismo"
+    />
+    <FlashCard
+      front="¿Qué es el medio Mycobiotic agar y para qué sirve?"
+      back="Sabouraud con cicloheximida. Selectivo para dermatofitos — inhibe hongos saprófitos contaminantes."
+      category="Medios"
+    />
+    <FlashCard
+      front="¿Cuál tinción digiere el tejido del huésped pero deja visibles los hongos?"
+      back="KOH 10–30% (mejor con tinta Parker añadida)"
+      category="Tinciones"
+    />
+  </div>
+</Layout>
+
+<style>
+  .page-intro { margin-bottom: 2rem; }
+  .page-intro__text { color: var(--text-muted); font-size: 1.05rem; }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0 1.75rem;
+  }
+  .step-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+  }
+  .step-num {
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .step-content h4 { margin: 0 0 0.3rem; }
+  .step-content p { margin: 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+
+  .flashcards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+</style>

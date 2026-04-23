@@ -1,0 +1,51 @@
+---
+interface Props {
+  title: string;
+  icon?: string;
+  subtitle?: string;
+  color?: 'primary' | 'secondary' | 'accent' | 'danger';
+}
+const { title, icon, subtitle, color = 'primary' } = Astro.props;
+---
+
+<div class={`section-header section-header--${color}`}>
+  {icon && <span class="section-header__icon">{icon}</span>}
+  <div>
+    <h2 class="section-header__title">{title}</h2>
+    {subtitle && <p class="section-header__subtitle">{subtitle}</p>}
+  </div>
+</div>
+
+<style>
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2.5rem 0 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid var(--border);
+  }
+  .section-header--primary { border-color: var(--primary); }
+  .section-header--secondary { border-color: var(--secondary); }
+  .section-header--accent { border-color: var(--accent); }
+  .section-header--danger { border-color: var(--danger); }
+
+  .section-header__icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+  .section-header__title {
+    margin: 0;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+  }
+  .section-header--primary .section-header__title { color: var(--primary-dark); }
+  .section-header--secondary .section-header__title { color: #7a5c00; }
+  .section-header--accent .section-header__title { color: var(--accent); }
+  .section-header--danger .section-header__title { color: var(--danger); }
+
+  .section-header__subtitle {
+    margin: 0.2rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+</style>

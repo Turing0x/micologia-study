@@ -1,0 +1,476 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import InfoBox from '../components/InfoBox.astro';
+import FlashCard from '../components/FlashCard.astro';
+---
+
+<Layout title="Dermatofitosis & Aspergilosis" description="Dermatofitos, tiñas, identificación de géneros y aspergilosis invasiva">
+  <div class="page-intro animate-in">
+    <h1>🦶 Dermatofitosis & Aspergilosis</h1>
+    <p class="page-intro__text">Dermatofitos (tiñas, géneros, identificación) y Aspergillus (aspergilosis invasiva, diagnóstico, especies).</p>
+  </div>
+
+  <!-- ════════ DERMATOFITOSIS ════════ -->
+  <SectionHeader title="BLOQUE A — Dermatofitosis" icon="🦶" color="accent" />
+
+  <!-- 1. QUÉ SON -->
+  <SectionHeader title="1. Dermatofitos — Definición y Géneros" icon="🔬" color="accent" subtitle="Micosis superficial de piel, pelo y uñas" />
+
+  <p>Hongos que infectan la <strong>capa córnea de pelo, piel y uñas</strong>. Producen queratinasas que degradan la queratina como fuente de nutrición. Pertenecen a <strong>3 géneros</strong>:</p>
+
+  <div class="genera-grid">
+    <div class="genus-card genus-card--trichophyton">
+      <h4><em>Trichophyton</em></h4>
+      <p class="genus-pct">80–90% de las tiñas</p>
+      <ul>
+        <li>Microconidias numerosas</li>
+        <li>Macroconidias en forma de lápiz</li>
+        <li>Especies: <em>T. rubrum</em>, <em>T. mentagrophytes</em>, <em>T. tonsurans</em></li>
+      </ul>
+    </div>
+    <div class="genus-card genus-card--microsporum">
+      <h4><em>Microsporum</em></h4>
+      <ul>
+        <li>Pocas microconidias (en lágrima)</li>
+        <li>Macroconidias fusiformes con <strong>pared rugosa y gruesa</strong></li>
+        <li>Especies: <em>M. canis</em>, <em>M. gypseum</em></li>
+      </ul>
+    </div>
+    <div class="genus-card genus-card--epidermophyton">
+      <h4><em>Epidermophyton</em></h4>
+      <ul>
+        <li><strong>Sin microconidias</strong></li>
+        <li>Macroconidias en palo de golf, pared lisa</li>
+        <li>Solo <em>E. floccosum</em></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2. ECOLOGÍA -->
+  <SectionHeader title="2. Clasificación por Reservorio" icon="🌍" color="accent" />
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Tipo</th><th>Reservorio</th><th>Reacción inflamatoria</th><th>Ejemplos</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Geofílicas</strong></td>
+          <td>Suelo</td>
+          <td>Intensa</td>
+          <td><em>M. gypseum</em></td>
+        </tr>
+        <tr>
+          <td><strong>Zoofílicas</strong></td>
+          <td>Animales</td>
+          <td>Intensa</td>
+          <td><em>M. canis</em> (gatos/perros), <em>T. verrucosum</em> (bovino), <em>T. equinum</em> (caballos)</td>
+        </tr>
+        <tr>
+          <td><strong>Antropofílicas</strong></td>
+          <td>Humanos</td>
+          <td>Leve, más crónica</td>
+          <td><em>T. rubrum</em>, <em>T. interdigitale</em>, <em>E. floccosum</em>, <em>T. violaceum</em></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 3. FORMAS CLÍNICAS -->
+  <SectionHeader title="3. Formas Clínicas (Clasificación Topográfica)" icon="🏥" color="accent" />
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Forma</th><th>Localización</th><th>Características</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Tinea capitis</strong></td>
+          <td>Cuero cabelludo</td>
+          <td>Exclusiva de la infancia. Formas no inflamatoria e inflamatoria (querion/kerion).</td>
+        </tr>
+        <tr>
+          <td><strong>Tinea corporis</strong></td>
+          <td>Piel lampiña del cuerpo</td>
+          <td>Lesión anular con borde activo y centro más claro. Incluye tinea faciei.</td>
+        </tr>
+        <tr>
+          <td><strong>Tinea cruris</strong></td>
+          <td>Ingle</td>
+          <td>Más frecuente en varones. Placa eritematosa en región inguinal.</td>
+        </tr>
+        <tr>
+          <td><strong>Tinea manuum</strong></td>
+          <td>Mano</td>
+          <td>Hiperqueratosis palmar. Frecuente con tinea pedis.</td>
+        </tr>
+        <tr>
+          <td><strong>Tinea pedis</strong></td>
+          <td>Pie ("pie de atleta")</td>
+          <td>La más frecuente en adultos. Formas: vesiculosa, hiperqueratósica (mocasín), interdigital.</td>
+        </tr>
+        <tr>
+          <td><strong>Tinea unguium</strong> (onicomicosis)</td>
+          <td>Uñas</td>
+          <td><strong>Mayor dificultad diagnóstica y de tratamiento.</strong> Formas: subungueal distal, proximal, distrofia total.</td>
+        </tr>
+        <tr>
+          <td><strong>Tinea barbae</strong></td>
+          <td>Barba</td>
+          <td>Placa descamante o lesión granulomatosa. <em>T. mentagrophytes</em>, <em>T. verrucosum</em>.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4. DIAGNÓSTICO -->
+  <SectionHeader title="4. Diagnóstico de Laboratorio" icon="🧫" color="accent" />
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div>
+        <h4>Toma de muestra</h4>
+        <p>Preguntar si el paciente recibe antifúngico → suspender al menos <strong>5 días</strong> antes. Desinfectar con alcohol 70%. Tomar muestra suficiente para examen directo y cultivo.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div>
+        <h4>Examen directo</h4>
+        <p><strong>KOH 20%</strong> (mejor con tinta Parker). Visualización de filamentos septados y ramificados. Mayor sensibilidad en onicomicosis que el cultivo.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div>
+        <h4>Cultivo e identificación</h4>
+        <p>Medio Sabouraud (con o sin cicloheximida). <strong>30°C</strong> durante <strong>4 semanas</strong>. Identificación por macro/microconidias, ureasa, perforación del pelo.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. DIFERENCIACIÓN GÉNEROS -->
+  <SectionHeader title="5. Diferenciación de Géneros" icon="🔭" color="accent" />
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Carácter</th><th><em>Epidermophyton</em></th><th><em>Trichophyton</em></th><th><em>Microsporum</em></th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Microconidias</strong></td>
+          <td>❌ Ausentes</td>
+          <td>✅ Numerosas, redondas o en lágrima</td>
+          <td>Pocas, forma de lágrima</td>
+        </tr>
+        <tr>
+          <td><strong>Macroconidias</strong></td>
+          <td>2–4 células, pared lisa, "palo de golf"</td>
+          <td>3–8 células, pared delgada y lisa, <strong>forma de lápiz</strong></td>
+          <td>3–6 células, pared <strong>rugosa y gruesa</strong>, fusiforme</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 6. FICHAS DE ESPECIES -->
+  <SectionHeader title="6. Especies Importantes" icon="📋" color="accent" />
+
+  <div class="species-grid">
+    <div class="species-card">
+      <h4><em>T. rubrum</em> — el más frecuente</h4>
+      <div class="species-tags">
+        <span class="s-tag s-tag--info">Antropofílico</span>
+        <span class="s-tag s-tag--danger">Ureasa: −</span>
+      </div>
+      <ul>
+        <li>Colonia vellosa blanca con <strong>halo rojizo</strong>, reverso rojo intenso</li>
+        <li>Macroconidias: raras, forma de <strong>lápiz</strong></li>
+        <li>Microconidias: en lágrima, alternas en hifas</li>
+      </ul>
+    </div>
+    <div class="species-card">
+      <h4><em>T. mentagrophytes</em></h4>
+      <div class="species-tags">
+        <span class="s-tag s-tag--info">Antrop./Zoofílico</span>
+        <span class="s-tag s-tag--ok">Ureasa: +</span>
+      </div>
+      <ul>
+        <li>Colonia granulosa canela (v. mentagrophytes) o vellosa blanca (v. interdigitalis)</li>
+        <li>Microconidias: muy abundantes, <strong>redondas</strong></li>
+        <li>Estructuras especiales: <strong>hifas en espiral</strong></li>
+      </ul>
+    </div>
+    <div class="species-card">
+      <h4><em>M. canis</em></h4>
+      <div class="species-tags">
+        <span class="s-tag s-tag--warning">Zoofílico (gatos/perros)</span>
+      </div>
+      <ul>
+        <li>Colonia granulosa o vellosa, periferia amarillo-anaranjada</li>
+        <li>Macroconidias: pared <strong>gruesa y rugosa</strong>, fusiformes, <strong>punta curvada</strong></li>
+      </ul>
+    </div>
+    <div class="species-card">
+      <h4><em>E. floccosum</em></h4>
+      <div class="species-tags">
+        <span class="s-tag s-tag--info">Antropofílico</span>
+      </div>
+      <ul>
+        <li>Colonia caqui-verdosa a marrón, aspecto estrellado</li>
+        <li>Macroconidias: forma <strong>palo de golf</strong>, en racimos</li>
+        <li>Microconidias: <strong>ausentes</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <InfoBox type="exam" title="T. rubrum vs T. mentagrophytes — diferenciación rápida">
+    <div class="table-wrap" style="margin:0.5rem 0 0">
+      <table>
+        <thead>
+          <tr><th>Carácter</th><th><em>T. rubrum</em></th><th><em>T. mentagrophytes</em></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ureasa</td><td>❌ Negativo</td><td>✅ Positivo</td></tr>
+          <tr><td>Reverso colonia</td><td>🔴 Rojo intenso</td><td>Marrón-amarillo</td></tr>
+          <tr><td>Microconidias</td><td>En lágrima, alternas</td><td>Abundantes, redondas</td></tr>
+          <tr><td>Hifas especiales</td><td>—</td><td>En espiral ↙</td></tr>
+          <tr><td>Ecología</td><td>Antropofílico</td><td>Antrop./Zoofílico</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </InfoBox>
+
+  <hr class="section-divider" />
+
+  <!-- ════════ ASPERGILOSIS ════════ -->
+  <SectionHeader title="BLOQUE B — Aspergilosis" icon="💨" color="danger" />
+
+  <SectionHeader title="7. Epidemiología de Aspergilosis" icon="📊" color="danger" />
+
+  <ul>
+    <li><em>Aspergillus</em> es la principal causa de <strong>IFI</strong> en pacientes HSCT.</li>
+    <li>Entre el <strong>8–15%</strong> de los pacientes con HSCT presentarán una IFI.</li>
+    <li><em>Aspergillus</em>: <strong>45–70%</strong> del total de IFI. <em>Candida</em>: 7–20%.</li>
+    <li>Dentro de <em>Aspergillus</em>: <em>A. fumigatus</em> en el <strong>90%</strong> de los casos.</li>
+  </ul>
+
+  <!-- 8. DIAGNÓSTICO ASPERGILLUS -->
+  <SectionHeader title="8. Diagnóstico Microbiológico de Aspergilosis" icon="🧫" color="danger" />
+
+  <InfoBox type="warning" title="Limitaciones del cultivo en aspergilosis">
+    <ul>
+      <li>Baja sensibilidad: BAL/esputo 20–60%; hemocultivos casi siempre negativos.</li>
+      <li>En localización no estéril, no diferencia colonización de invasión.</li>
+      <li>Sensibilidad en tejido histopatológico: ~30–52%.</li>
+    </ul>
+  </InfoBox>
+
+  <h3>Técnicas alternativas (marcadores)</h3>
+  <div class="markers-grid">
+    <div class="marker-card">
+      <h4>Galactomanano (GM)</h4>
+      <p>Ag de pared de <em>Aspergillus</em> en sangre/BAL. <strong>Marcador específico</strong>. Útil en pacientes hematológicos.</p>
+    </div>
+    <div class="marker-card">
+      <h4>β-D-Glucano</h4>
+      <p>Marcador <strong>inespecífico</strong> de IFI (positivo también en <em>Candida</em>, <em>Pneumocystis</em>).</p>
+    </div>
+    <div class="marker-card">
+      <h4>PCR</h4>
+      <p>Alta sensibilidad pero difícil estandarización. Útil en BAL y sangre.</p>
+    </div>
+  </div>
+
+  <!-- 9. ESPECIES ASPERGILLUS -->
+  <SectionHeader title="9. Especies de Aspergillus — Identificación" icon="🔭" color="danger" />
+
+  <p><strong>Estructura de la cabeza aspergilar:</strong> conidióforo + vesícula + fiálides (± métulas) + cadenas de fialoconidias.</p>
+  <p><strong>Clave:</strong> uniseriado (180°, fiálides directo en vesícula) vs. biseriado (360°, fiálides sobre métulas).</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Especie</th><th>Color colonia</th><th>Fiálides</th><th>Conidios</th><th>Frecuencia IFI</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><em>A. fumigatus</em></strong></td>
+          <td>Verde → grisáceo oscuro</td>
+          <td>180° (uniseriado, solo mitad superior vesícula)</td>
+          <td>Verdes</td>
+          <td><strong>90%</strong></td>
+        </tr>
+        <tr>
+          <td><em>A. flavus</em></td>
+          <td>Blanco → verde azulado</td>
+          <td>360°, 1 o 2 series</td>
+          <td>Verdes, finamente rugosos</td>
+          <td>Minoritario</td>
+        </tr>
+        <tr>
+          <td><em>A. niger</em></td>
+          <td>Blanco-amarillento con <strong>puntos negros</strong></td>
+          <td>360°, 2 series (biseriado)</td>
+          <td><strong>Negros</strong>, redondos</td>
+          <td>Minoritario</td>
+        </tr>
+        <tr>
+          <td><em>A. terreus</em></td>
+          <td><strong>Canela / café</strong>, granulares</td>
+          <td>360°, biseriadas</td>
+          <td>Hialinos, esféricos</td>
+          <td>Minoritario</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FLASHCARDS -->
+  <SectionHeader title="Fichas de Repaso" icon="🃏" color="accent" subtitle="Toca cada tarjeta para ver la respuesta" />
+
+  <div class="flashcards-grid">
+    <FlashCard
+      front="¿Qué género de dermatofito NO produce microconidias?"
+      back="EPIDERMOPHYTON — solo produce macroconidias (en forma de palo de golf)"
+      category="Dermatofitos"
+    />
+    <FlashCard
+      front="¿Cuál es la diferencia de ureasa entre T. rubrum y T. mentagrophytes?"
+      back="T. mentagrophytes: ureasa POSITIVO ✓ / T. rubrum: ureasa NEGATIVO ✗"
+      category="Identificación"
+    />
+    <FlashCard
+      front="¿Qué % de IFI en pacientes HSCT corresponde a Aspergillus?"
+      back="45–70% del total de IFI. Especie predominante: A. fumigatus (90%)"
+      category="Aspergilosis"
+    />
+    <FlashCard
+      front="¿A qué ángulo se disponen las fiálides en A. fumigatus vs A. niger?"
+      back="A. fumigatus: 180° (solo mitad superior). A. niger: 360° (toda la vesícula), biseriado."
+      category="Aspergillus"
+    />
+    <FlashCard
+      front="¿Cuál es la tinea de mayor dificultad diagnóstica y terapéutica?"
+      back="TINEA UNGUIUM (onicomicosis) — afecta las uñas, tratamiento prolongado y difícil."
+      category="Dermatofitosis"
+    />
+    <FlashCard
+      front="¿Cuál es el marcador sérico específico de aspergilosis invasiva?"
+      back="GALACTOMANANO (GM) — detecta Ag de pared de Aspergillus en sangre/BAL. No detecta Candida."
+      category="Diagnóstico"
+    />
+  </div>
+</Layout>
+
+<style>
+  .page-intro { margin-bottom: 2rem; }
+  .page-intro__text { color: var(--text-muted); font-size: 1.05rem; }
+
+  .genera-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .genus-card {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.15rem;
+    box-shadow: var(--shadow);
+  }
+  .genus-card--trichophyton { border-color: var(--accent); }
+  .genus-card--microsporum  { border-color: var(--primary); }
+  .genus-card--epidermophyton { border-color: var(--secondary); }
+  .genus-card h4 { margin: 0 0 0.25rem; }
+  .genus-pct { font-size: 0.82rem; color: var(--danger); font-weight: 700; margin: 0 0 0.5rem; }
+  .genus-card ul { margin: 0.5rem 0 0; padding-left: 1.25rem; font-size: 0.88rem; }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0 1.75rem;
+  }
+  .step-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+  }
+  .step-num {
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .step-card h4 { margin: 0 0 0.3rem; }
+  .step-card p { margin: 0; font-size: 0.88rem; color: var(--text-muted); }
+
+  .species-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .species-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.15rem;
+    box-shadow: var(--shadow);
+  }
+  .species-card h4 { margin: 0 0 0.5rem; }
+  .species-card ul { margin: 0.5rem 0 0; padding-left: 1.25rem; font-size: 0.88rem; }
+  .species-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.5rem; }
+  .s-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.15rem 0.55rem;
+    border-radius: 99px;
+  }
+  .s-tag--info    { background: #e8f4ff; color: #1a6eb5; }
+  .s-tag--warning { background: #fff3e0; color: #b26a00; }
+  .s-tag--ok      { background: #e8f5e9; color: #2d6a30; }
+  .s-tag--danger  { background: #fdecea; color: var(--danger); }
+
+  .markers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .marker-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--danger);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.15rem;
+    box-shadow: var(--shadow);
+  }
+  .marker-card h4 { margin: 0 0 0.4rem; color: var(--danger); }
+  .marker-card p { margin: 0; font-size: 0.9rem; }
+
+  .flashcards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+</style>
